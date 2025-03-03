@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 11</title>
+</head>
+<body>
+    <h1>Form</h1>
+
+    <form method="GET">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="email">
+        <br>
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob">
+        <br>
+        <label for="favcol">Favorite Color</label>
+        <input type="color" id="favcol">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <h1>Video</h1>
+    <video src="./Utils/video.mp4" controls poster="./Utils/Ganesh.png"></video>
+
+    <h1>Canvas</h1>
+    <canvas id="canvas" width="800px" height="400px" style="background-color: beige;">
+        Canvas text
+    </canvas>
+
+    <script>
+        const canvas = document.getElementById("canvas")
+        const ctx = canvas.getContext('2d')
+
+        ctx.fillStyle  = 'red'
+
+        ctx.fillRect(10, 10, 100, 100)
+    </script>
+</body>
+</html>

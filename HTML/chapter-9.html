@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 9</title>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Video</h1>
+    <video src="./Utils/video.mp4" width="300px" controls poster="./Utils/Ganesh.png" >
+    </video>
+    <video src="./Utils/friday.mp4" width="300px" controls >
+        <track
+            default
+            kind="captions"
+            lang="en"
+            src="./Utils/fiday.vtt"
+        ></track>
+
+        <!-- <a href="./fiday.vtt">subtitles</a>. -->
+    </video>
+
+    <h1>Audio</h1>
+    <audio controls>
+        <source src="./Utils/t-rex-roar.mp3" type="audio/mp3">
+    </audio>
+    <audio controls>
+        <source src="./Utils/horse.wav" type="audio/wav">
+    </audio>
+
+    <h1>iframe</h1>
+    <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/4WqAmAZ3atI?si=pDwLNnXzsry-Mae8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+
+    </iframe> -->
+
+    <iframe width="400px" height="200px" src="https://www.youtube.com/embed/4WqAmAZ3atI?si=pDwLNnXzsry-Mae8" frameborder="0"></iframe>
+</body>
+</html>
