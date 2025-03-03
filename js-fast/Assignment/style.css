@@ -1,0 +1,31 @@
+body {
+    width: 100dvw;
+    text-align: center;
+    overflow: hidden;
+}
+
+form input {
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 5px 10px 5px 10px;
+    margin-right: 10px;
+}
+
+form button {
+    height: 30px;
+    padding: 5px 10px 5px 10px;
+    background-color: darkslategray;
+    color: aliceblue;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+#btn-div button {
+    height: 30px;
+    padding: 0 10px 0 10px;
+    margin-left: 10px;
+    margin-top: 25px;
+    color: aliceblue;
+    border: 2px solid black;
+    border-radius: 5px;
+}
