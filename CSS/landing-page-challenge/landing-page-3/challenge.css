@@ -1,0 +1,141 @@
+/* Challenge CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Georgia", serif;
+  line-height: 1.6;
+  color: #333;
+  /* width: 100vw; */
+  height: 100vh;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 50px;
+  background-color: #ffffff;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2em;
+  font-weight: 600;
+  color: rgb(154, 57, 0);
+}
+
+.logo img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  padding: 1px;
+  border: 2px solid rgb(154, 57, 0);
+  object-fit: cover;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: rgb(154, 57, 0);
+  margin-left: 20px;
+  padding: 5px 10px;
+  border: 1px solid transparent;
+}
+
+.nav-menu a:hover {
+  border: 1px solid rgb(154, 57, 0);
+}
+
+.hero {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  text-align: center;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./assets/chaipatti.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0% 50%;
+  color: #ffffff;
+}
+
+.hero-text{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.hero-text h1 {
+  font-size: 2em;
+}
+
+.hero-text p {
+  font-size: 0.9em;
+}
+
+.shop-button {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 2px solid rgb(154, 57, 0);
+  background-color: rgb(154, 57, 0);
+  color: #ffffff;
+}
+
+.shop-button:hover {
+  background-color: transparent;
+  border: 2px solid #ffffff;
+}
+
+.tea-collection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* gap: 40px; */
+  margin: 40px 0;
+  width: 100%;
+}
+
+.tea-collection h2 {
+  color: rgb(154, 57, 0);
+}
+
+.tea-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  padding: 50px;
+}
+
+.tea-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 20px;
+  box-shadow: rgba(30, 30, 30, 0.164) 4px 8px 30px;
+  border-radius: 20px;
+}
+
+.tea-card h3 {
+  color: rgb(154, 57, 0);
+}
+
+.tea-card p {
+  color: #333333aa;
+}
