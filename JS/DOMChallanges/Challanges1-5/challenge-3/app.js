@@ -8,17 +8,17 @@ const ageDisplay = document.getElementById('ageDisplay')
 const bioDisplay = document.getElementById('bioDisplay')
 
 nameInput.addEventListener('input', (e) => {
-    nameDisplay.textContent = e.target.value
+    nameDisplay.textContent = e.target.value || 'Not provided'
 })
 
 jobInput.addEventListener('input', (e) => {
-    jobDisplay.textContent = e.target.value
+    jobDisplay.textContent = e.target.value || 'Not provided'
 })
 
 ageInput.addEventListener('input', (e) => {
-    ageDisplay.textContent = e.target.value
+    ageDisplay.textContent = e.target.value || 'Not provided'
 })
 
 bioInput.addEventListener('input', (e) => {
-    bioDisplay.textContent = e.target.value
+    bioDisplay.textContent = e.target.value || 'Not provided'
 })
