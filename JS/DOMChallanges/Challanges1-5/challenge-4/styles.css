@@ -77,7 +77,7 @@ h1 {
   cursor: pointer;
 }
 
-.task-item.completed .task-text {
+.completed {
   text-decoration: line-through;
   color: #95a5a6;
 }
