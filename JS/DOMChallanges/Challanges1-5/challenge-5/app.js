@@ -1,6 +1,3 @@
-/**
- * Write your challenge solution here
- */
 // Image data
 const images = [
   {
@@ -20,3 +17,98 @@ const images = [
     caption: 'Urban City Skyline',
   },
 ];
+
+const carouselTrack = document.getElementById('carouselTrack')
+const caption = document.getElementById('caption')
+const prevButton = document.getElementById('prevButton')
+const nextButton = document.getElementById('nextButton')
+const carouselNav = document.getElementById('carouselNav')
+const autoPlayButton = document.getElementById('autoPlayButton')
+const timerDisplay = document.getElementById('timerDisplay')
+
+let currIdx = 0
+let length = images.length
+
+for (let i = 0; i < length; i++) {
+  const indicator = createIndicators()
+  indicator.setAttribute('id', i)
+  indicator.addEventListener('click', () => displayImage(i))
+  carouselNav.appendChild(indicator)
+}
+
+const indicators = document.querySelectorAll('.carousel-indicator')
+
+displayImage(currIdx)
+
+nextButton.addEventListener('click', showNext)
+
+prevButton.addEventListener('click', showPrev)
+
+autoPlayButton.addEventListener('click', handleAutoPlay)
+
+function displayImage(idx = 0) {
+  let url = images[idx].url
+  carouselTrack.style.backgroundImage = `url(${url})`
+  carouselTrack.classList.add('carousel-slide')
+  caption.textContent = images[idx].caption
+
+  indicators.forEach((indicator) => {
+    if(indicator.id == idx){
+      indicator.classList.add('active')
+    }else {
+      indicator.classList.remove('active')
+    }
+  })
+
+}
+
+function showNext() {
+  currIdx = (length + currIdx + 1) % length
+  displayImage(currIdx)
+}
+
+function showPrev() {
+  currIdx = (length + currIdx - 1) % length
+  displayImage(currIdx)
+}
+
+let intervalId, timeoutId;
+function handleAutoPlay() {
+
+  if(intervalId || timeoutId) {
+    timerDisplay.textContent = ''
+    autoPlayButton.textContent = 'Start Auto Play'
+    clearInterval(intervalId)
+    clearTimeout(timeoutId)
+    intervalId = undefined
+    timeoutId = undefined
+    return
+  }
+  
+  autoPlayButton.textContent = 'Stop Auto Play'
+  
+  startAutoPlay(intervalId)
+  
+}
+
+function startAutoPlay() {
+  let timeRemaning = 4
+  
+  timerDisplay.textContent = `Next slide in 5s`
+  intervalId = setInterval(() => {
+    timerDisplay.textContent = `Next slide in ${timeRemaning}s`
+    timeRemaning--
+  }, 1000)
+  
+  timeoutId = setTimeout(() => {
+    showNext()
+    clearInterval(intervalId)
+    startAutoPlay()
+  }, 5000)
+}
+
+function createIndicators() {
+  const indicator = document.createElement('div')
+  indicator.classList.add('carousel-indicator')
+  return indicator
+}
