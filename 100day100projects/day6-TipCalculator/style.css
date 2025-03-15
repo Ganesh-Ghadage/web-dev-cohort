@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background-color: #1d1d1d;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    /* width: 200px; */
+    background-color: #181818;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px black;
+}
+
+.inpDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.inpDiv label {
+    opacity: 0.8;
+    margin-bottom: 5px;
+}
+
+.inpDiv input {
+    width: 100%;
+    padding: 6px 8px;
+    background-color: #323232;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+}
+
+#calculateTipBtn {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(47, 250, 47);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+#calculateTipBtn:hover {
+    background-color: rgba(11, 197, 11, 0.647);
+}
+
