@@ -83,21 +83,21 @@ h2 {
 
 .hour {
   width: 8px;
-  height: 30%;
+  height: 20%;
   background: #ff9800;
   left: 50%;
 }
 
 .minute {
   width: 6px;
-  height: 40%;
+  height: 30%;
   background: #03a9f4;
   left: 50%;
 }
 
 .second {
   width: 4px;
-  height: 45%;
+  height: 35%;
   background: #f44336;
   left: 50%;
 }
