@@ -6,12 +6,20 @@ const form = document.querySelector("form");
 
 const today = new Date().toLocaleDateString();
 let mood = {date: today};
-let moodHistory = {}
-let savedTodaysMood = {}
 
 // get moodHistory and todays mood from local storage
-moodHistory = JSON.parse(localStorage.getItem('moodHistory'))
-savedTodaysMood = JSON.parse(localStorage.getItem('moodToday'))
+let moodHistory = JSON.parse(localStorage.getItem("moodHistory")) || {};
+let savedTodaysMood = JSON.parse(localStorage.getItem('moodToday')) || {}
+
+// Ensure moodHistory is an object before assigning properties
+if (typeof moodHistory !== "object" || moodHistory === null) {
+    moodHistory = {}; // Reset to an empty object
+}
+
+// Ensure savedTodaysMood is an object before assigning properties
+if (typeof savedTodaysMood !== "object" || savedTodaysMood === null) {
+    savedTodaysMood = {}; // Reset to an empty object
+}
 
 // to display users save mood if user has saved mood for today
 if(savedTodaysMood){
@@ -33,7 +41,7 @@ function getFormData(event) {
     }
     
     // store the mood data and mood history data in local storage
-    moodHistory[`${today}`] = mood
+    moodHistory[today] = mood
     localStorage.setItem('moodHistory', JSON.stringify(moodHistory))
     localStorage.setItem('moodToday', JSON.stringify(mood))
 
