@@ -31,7 +31,7 @@ function getFormData(event) {
     }
     
     // store the mood data and mood history data in local storage
-    moodHistory[today] = mood
+    moodHistory.today = mood
     localStorage.setItem('moodHistory', JSON.stringify(moodHistory))
     localStorage.setItem('moodToday', JSON.stringify(mood))
 
