@@ -23,8 +23,8 @@ if (typeof savedTodaysMood !== "object" || savedTodaysMood === null) {
 
 // to display users save mood if user has saved mood for today
 if(savedTodaysMood){
-    moodDisplay.textContent = savedTodaysMood?.mood
-    noteDisplay.textContent = savedTodaysMood?.note
+    moodDisplay.textContent = savedTodaysMood?.mood || 'Select Mood'
+    noteDisplay.textContent = savedTodaysMood?.note || 'Add a note'
 }
 
 // event listener to handle form submit event
