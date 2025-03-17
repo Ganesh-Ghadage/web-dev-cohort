@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Mood Tracker</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Mood Tracker</h1>
+
+        <div class="moodInputContainer">
+            <form>
+            <fieldset class="moodSelector">
+                <legend>Select a Your Mood:</legend>
+
+                <div>
+                    <input class="moodInput" type="radio" id="happy" name="mood" value="happy" title="happy" />
+                    <label for="happy" class="moodButton" >😄</label>
+                </div>
+                <div>
+                    <input class="moodInput" type="radio" id="sad" name="mood" value="sad" title="sad" />
+                    <label for="sad" class="moodButton" >😔</label>
+                </div>
+                <div>
+                    <input class="moodInput" type="radio" id="angry" name="mood" value="angry" title="angry" />
+                    <label for="angry" class="moodButton" >😡</label>
+                </div>
+                <div>
+                    <input class="moodInput" type="radio" id="tired" name="mood" value="tired" title="tired" />
+                    <label for="tired" class="moodButton" >😴</label>
+                </div>
+                <div>
+                    <input class="moodInput" type="radio" id="excited" name="mood" value="tired" title="excited" />
+                    <label for="excited" class="moodButton" >🤩</label>
+                </div>
+
+            </fieldset>
+
+            <textarea name="note" id="noteInput" placeholder="Add a note.."></textarea>
+
+            <button class="myButton" id="saveButton">Save</button>
+        </form>
+        </div>
+
+        <div class="moodDisplayContainer">
+            <p>
+                Your Today's Mood is: <span id="moodDisplay">Select Mood</span>
+            </p>
+            <p>
+                You Note for Today is: <span id="noteDisplay">Add a note</span>
+            </p>
+            
+        </div>
+
+        <button class="myButton" id="moodHistory">Check Mood History</button>
+
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
