@@ -21,7 +21,7 @@ body {
 }
 
 .container {
-    width: 400px;
+    width: 60%;
     background-color: #181818;
     padding: 20px;
     display: flex;
@@ -110,4 +110,19 @@ body {
 #moodHistoryButton a {
     text-decoration: none;
     color: #000;
+}
+
+
+@media only screen and (max-width: 600px) {
+    body {
+        height: fit-content;
+    }
+    .container {
+        width: 200px;
+        margin: 20px 0;
+    }
+
+    .moodSelector {
+        flex-direction: column;
+    }
 }
