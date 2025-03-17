@@ -17,12 +17,14 @@ if(savedTodaysMood){
     noteDisplay.textContent = savedTodaysMood?.note
 }
 
-
+// event listener to handle form submit event
 form.addEventListener('submit', (event) => getFormData(event))
 
 // to handle the mood form data
 function getFormData(event) {
     event.preventDefault();
+
+    // format the form data into object
     const data = new FormData(form);
     for (const entry of data) {
         mood[entry[0]] = entry[1]
@@ -33,19 +35,11 @@ function getFormData(event) {
     localStorage.setItem('moodHistory', JSON.stringify(moodHistory))
     localStorage.setItem('moodToday', JSON.stringify(mood))
 
-    // remove checked attribute from mood input radio button 
+    // reset form values to original
     moodInput.forEach((item) => item.checked = false)
-    
     noteInput.value = ''
 
     // display the users mood
     moodDisplay.textContent = mood.mood
     noteDisplay.textContent = mood.note
 }
-
-// // to update the mood display by clicking on Mood Input Radio Buttons
-// moodInput.forEach((item) => {
-//     item.addEventListener('click', () => {
-//         moodDisplay.textContent = item.value
-//     })
-// })

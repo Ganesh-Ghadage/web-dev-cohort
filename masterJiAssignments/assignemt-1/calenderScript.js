@@ -5,9 +5,9 @@ const moodHistory = JSON.parse(localStorage.getItem('moodHistory'))
 const moods = ["Happy 😄", "Sad 😔", "Angry 😡", "Tired 😴", "Excited 🤩"]
 const colors = ['#FFD70085', '#5D87A185', '#D32F2F85', '#4B386985', '#FF6F0085']
 
+// creating event array as per library norms to display it on calender
 const events = []
 
-// creating enent arraay as per library norms to display it on calender
 for(date in moodHistory) {
     const event = {
         title: moodHistory[date].mood,
@@ -22,7 +22,7 @@ for(date in moodHistory) {
     events.push(event)
 }
 
-
+// generaate calender and render it on screen using FullCalender library
 document.addEventListener('DOMContentLoaded', function() {
 let calendarEl = document.getElementById('calendar');
 let calendar = new FullCalendar.Calendar(calendarEl, {
