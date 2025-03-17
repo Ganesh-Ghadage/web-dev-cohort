@@ -6,9 +6,10 @@ const form = document.querySelector("form");
 
 const today = new Date().toLocaleDateString();
 let mood = {date: today};
+const moodHistory = {}
 
 // get moodHistory and todays mood from local storage
-const moodHistory = JSON.parse(localStorage.getItem('moodHistory'))
+moodHistory = JSON.parse(localStorage.getItem('moodHistory'))
 const savedTodaysMood = JSON.parse(localStorage.getItem('moodToday'))
 
 // to display users save mood if user has saved mood for today
