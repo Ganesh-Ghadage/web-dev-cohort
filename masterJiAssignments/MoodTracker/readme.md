@@ -13,6 +13,7 @@ Your daily mood tracker
 - Track daily/weekly/monthly moods
 - Calender support for timeline view
 - Responsive Design
+- LocalStorage to store mood logs
 
 ## Screenshots
 ![Home Page](image.png)
