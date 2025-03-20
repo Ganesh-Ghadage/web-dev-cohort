@@ -170,7 +170,7 @@ function downloadQuote(text) {
     const url = URL.createObjectURL(blob) 
 
     a.href = url // Set "a" element link
-    a.download = quote.txt // Set download filename
+    a.download = 'quote.txt' // Set download filename
     a.click() // Start downloading
 
     URL.revokeObjectURL(url) // remove an object URL
