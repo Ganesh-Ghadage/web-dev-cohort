@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Signika Negative", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    min-height: 100dvh;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?q=80&w=2113&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') linear-gradient(rgba(58, 58, 58, 0.921), rgba(57, 57, 57, 0.822)) ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #ffffff;
+}
+
+.container {
+    width: fit-content;
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 50px;
+    background-color: #1c1c1ca6;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgb(49, 42, 42);
+    padding: 20px 40px;
+}
+
+.container h1 {
+    font-size: 3em;
+}
+
+#quoteDisplay {
+    font-size: 2em;
+    font-family: "Edu AU VIC WA NT Guides", cursive;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+}
+
+#authorDisplay {
+    font-size: 1.3em;
+    margin-top: 10px;
+    margin-right: 20px;
+    text-align: end;
+}
+
+.buttonDiv {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.myButtons {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #151394;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.myButtons:hover {
+    background-color: #15139495;
+}
+
+#shareBtn {
+    background-color: #000000;
+}
+
+#shareBtn:hover {
+    background-color: #0000008a;
+}
+
+#shareBtn a {
+    text-decoration: none;
+    color: #ffffff;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+#copyBtn {
+    background-color: #9d32a8;
+}
+
+#copyBtn:hover {
+    background-color: #9c32a88a;
+}
+
+#exportBtn {
+    background-color: #4aa832;
+}
+
+#exportBtn:hover {
+    background-color: #4aa83291;
+}
+
+.tost {
+    position: absolute;
+    padding: 10px 20px;
+    background-color: #22202081;
+    color: #dddfdf;
+    border-radius: 5px;
+    z-index: 10;
+}
+
+@media screen and (max-width: 480px) {
+
+    .container {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        gap: 10px;
+    }
+
+    .container h1 {
+        font-size: 2em;
+    }
+
+    #quoteDisplay {
+        font-size: 1.5em;
+    }
+
+    .buttonDiv {
+        flex-direction: column;
+        gap: 20px;
+    }
+}

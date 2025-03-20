@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Random Quote</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Get Random Quote</h1>
+
+        <div>
+            <p id="quoteDisplay">Click button to get a quote</p>
+            <p id="authorDisplay"></p>
+        </div>
+
+        <div class="buttonDiv">
+            <button class="myButtons" id="generateBtn">Get New Quote</button>
+            <button class="myButtons" id="copyBtn">Copy Quote</button>
+            <button class="myButtons" id="shareBtn">
+                <a class="twitter-share-button"
+                    href="https://twitter.com/intent/tweet"
+                    data-size="large"
+                    target="_blank"
+                >
+                   <img src="./assets/X.png" alt="X logo" height="15px"> Tweet
+                </a>
+            </button>
+
+            <button class="myButtons" id="exportBtn">Export</button>
+        </div>
+
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>

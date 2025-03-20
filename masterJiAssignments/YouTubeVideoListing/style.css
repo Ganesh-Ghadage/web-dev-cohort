@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300..700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Signika Negative", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    background-color: #1d1d1d;
+    color: #ffffff;
+}
+
+.container{
+    width: 100%;
+    height: 100%;
+}
+
+.navBar {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #181818;
+    z-index: 10;
+}
+
+.searchBar {
+    width: 250px;
+    height: 40px;
+    display: flex;
+    border-radius: 20px;
+    background-color: #1d1d1d;
+}
+
+#searchInput {
+    width: 100%;
+    border-radius: 20px 0 0 20px;
+    padding-left: 10px;
+    border: 2px solid #1d1d1d;
+    background-color: #3a3a3a;
+    color: #ffffff;
+    font-size: 1em;
+}
+
+#searchButton {
+    border-radius: 0 20px 20px 0;
+    border: 2px solid #1d1d1d;
+    padding: 0 8px;
+    background-color: #3a3a3a;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+.videoGrid {
+    width: 100%;
+    height: 85%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 10px 20px 20px 20px;
+}
+
+.videoDiv {
+    width: 350px;
+    height: fit-content;
+    background-color: #424040;
+    border-radius: 10px;
+}
+
+.videoDiv a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.videoDiv:hover {
+    box-shadow: 0 0 10px black;
+}
+
+#videoThumbnail {
+    width: 100%;
+    height: 80%;
+    border-radius: 10px 10px 0 0;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.img-hover-zoom {
+    overflow: hidden;
+    border-radius: 10px 10px 0 0;
+}
+  
+.img-hover-zoom img {
+    transition: transform .5s ease;
+}
+  
+
+.img-hover-zoom:hover img {
+    transform: scale(1.1);
+}
+
+.videoInfo {
+    padding: 0 0 10px 20px;
+    height: fit-content;
+}
+
+#videoTitle {
+    max-width: 100%;
+    height: fit-content;
+    /* height: 25px; */
+    font-size: 1.3em;
+    /* overflow: hidden; */
+}
+
+.buttonDiv {
+    display: flex;
+    justify-content: end;
+    margin-right: 2%;
+}
+
+#loadMoreButton {
+    margin-bottom: 20px;
+    text-align: end;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+#resultText {
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+@media screen and (max-width: 480px) {
+    body {
+      width: 95dvw;
+    }
+    
+    .navBar {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .navBar h1 {
+        font-size: 1.7em;
+    }
+
+    .videoDiv {
+        width: 100%;
+    }
+
+}
