@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" href="./mdlogo.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <title>Markdown Previewer</title>
+</head>
+<body>
+    <h1>Markdown Previewer</h1>
+    <div class="container">
+        <div class="editor">
+            <h2>Write Markdown here..</h2>
+            <textarea class="textArea" name="edit" id="edit"></textarea>
+        </div>
+        <div class="buttons">
+            <button class="btn" id="clearBtn">Clear</button>
+            <button class="btn" id="mdCopyBtn">Copy Markdown</button>
+            <button class="btn" id="htmlCopyBtn">Copy HTML</button>
+        </div>
+        <div class="previewer">
+            <h2>Markdown Preview...</h2>
+            <div class="previweArea"></div>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>

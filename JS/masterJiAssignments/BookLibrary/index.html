@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" href="./assetes/books-icon.png" type="image/x-icon">
+    <title>Book Library</title>
+</head>
+<body>
+    <div class="container">
+        <div class="navBar">
+            <h1>Book Library</h1>
+
+            <div class="searchBar">
+                <select name="searchType" id="searchBy" >
+                    <option value="title">Search By Title</option>
+                    <option value="author">Search By Author</option>
+                </select>
+                <input type="text" id="searchInput" placeholder="Search Something...">
+                <button id="searchButton">🔍</button>
+            </div>
+
+            <div class="sortByDiv">
+                <p>Sort By</p>
+                <select name="sortType" id="sortBy" >
+                    <option value="">Select Something</option>
+                    <option value="title-ace">Sort By Title [A-Z]</option>
+                    <option value="title-dec">Sort By Title [Z-A]</option>
+                    <option value="publishedDate-ace">Sort By Published Date [0-1]</option>
+                    <option value="publishedDate-dec">Sort By Published Date [1-0]</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="topBar">
+            <p id="resultText" class="hidden">Showing Trendig results</p>
+            <div class="layoutSwitch">
+                <button class="layoutBtn active" id="gridLayout"><span>&#119638;</span> Grid</button>
+                <button class="layoutBtn" id="listLayout"><span>&#9776;</span> List</button>
+            </div>
+        </div>
+
+        <div class="bookGrid">
+            <div class="loadingContainer hidden">
+                <!-- loading skeleton will be displayed here -->
+            </div>
+
+            <div class="errorContainer hidden">
+                <!-- error will be displayed here -->
+            </div>
+
+            <div class="bookContainer grid">
+                <!-- Books will be displayed here -->
+            </div>
+        </div>
+
+        <div class="paginationDiv">
+            <!-- pagination will be displayed here -->
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>
