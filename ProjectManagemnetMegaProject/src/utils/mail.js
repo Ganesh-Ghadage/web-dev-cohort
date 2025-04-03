@@ -16,7 +16,7 @@ async function sendVerifyMail(email, token) {
         from: process.env.MAILTRAP_EMAIL,
         to: email, // list of receivers
         subject: "Verify your mail",
-        text: `Plase click on below like to verify your email: ${process.env.BASE_URl}/api/v1/user/verify/${token}`, 
+        text: `Plase click on below like to verify your email: ${process.env.BASE_URl}/api/v1/users/verify/${token}`, 
     }
 
     const info = await transporter.sendMail(options)

@@ -3,8 +3,9 @@ import { ApiResponce } from "../utils/api-responce.js"
 import { User } from "../models/user.models.js"
 import { ApiError } from "../utils/api-error.js";
 import { deleteFromCloudinary, upolodOnClodinary } from "../utils/cloudinary.js";
-import fs from 'fs'
+import fs from 'fs';
 import { sendVerifyMail } from "../utils/mail.js";
+import crypto from 'crypto';
 
 const registerUser = asyncHandler(async (req, res) => {
   const {username, email, password, fullname, role} = req.body
@@ -57,7 +58,7 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     // send emilaVerificationToken to user
-    await sendVerifyMail(email, hashedToken)
+    await sendVerifyMail(email, unHashedToken)
 
     res.status(201).json(new ApiResponce(201, user, "User registered sucessfully"))
 
@@ -78,4 +79,39 @@ const registerUser = asyncHandler(async (req, res) => {
 
 })
 
-export { registerUser }
+const verifyUser = asyncHandler(async (req, res) => {
+  const { token } = req.params
+
+  const hashedToken = crypto.createHash("sha256").update(token).digest('hex')
+
+  const user = await User.findOne({emailVerificationToken: hashedToken})
+
+  if(!user) {
+    throw new ApiError(404, "User not found")
+  }
+
+  if(user.emailVerificationExpiry <= Date.now()) {
+    throw new ApiError(406, "Verification token expired")
+  }
+
+  user.isEmailVerified = true
+  user.emailVerificationToken = undefined
+  user.emailVerificationExpiry = undefined
+
+  await user.save()
+
+  res.status(200).json(new ApiResponce(200, 
+    {
+      _id: user._id,
+      email: user.email,
+      username: user.username
+    },
+    "User verified successfully"
+  ))
+
+})
+
+export { 
+  registerUser,
+  verifyUser
+}

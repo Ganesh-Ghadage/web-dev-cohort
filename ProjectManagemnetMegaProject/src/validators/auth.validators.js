@@ -1,4 +1,4 @@
-import { body } from 'express-validator'
+import { body, param } from 'express-validator'
 import { User } from '../models/user.models.js'
 
 const userRegisterValidator = () => {
@@ -34,5 +34,15 @@ const userRegisterValidator = () => {
   ]
 }
 
+const userVerificationValidator = () => {
+  return [
+    param("token")
+      .trim()
+      .notEmpty().withMessage("Token is required")
+  ]
+}
 
-export { userRegisterValidator }
+export { 
+  userRegisterValidator,
+  userVerificationValidator
+}
