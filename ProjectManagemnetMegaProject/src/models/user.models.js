@@ -15,7 +15,7 @@ const userSchema = new Schema(
                 localPath: ""
             }
         },
-        userName: {
+        username: {
             type: String,
             trim: true,
             required: true,
@@ -46,7 +46,7 @@ const userSchema = new Schema(
             type: Boolean,
             default: false
         },
-        refreshToke: {
+        refreshToken: {
             type: String,
         },
         forgotPasswordToken: {
@@ -109,11 +109,11 @@ userSchema.methods.generateRefreshToken = function() {
     )
 }
 
-userSchema.methods.generateEmailToke = function() {
+userSchema.methods.generateEmailToken = function() {
     const unHashedToken = crypto.randomBytes(16).toString('hex')
 
-    const hashedToken = crypto.createHash("rsh256").update(unHashedToken).digest('hex')
-    const tokenExpiry = Date.now + (20*60*1000)  // 20 min
+    const hashedToken = crypto.createHash("sha256").update(unHashedToken).digest('hex')
+    const tokenExpiry = Date.now() + (20*60*1000)  // 20 min
 
     return { unHashedToken, hashedToken, tokenExpiry }
 }
