@@ -7,6 +7,24 @@ import fs from 'fs';
 import { sendVerifyMail } from "../utils/mail.js";
 import crypto from 'crypto';
 
+const generateAccessAndRefreshToken = async (userId) => {
+  if(!userId) return null;
+
+  const user = await User.findById(userId)
+
+  if(!user) {
+    throw new ApiError(406, "User ID does not exits")
+  }
+
+  const accessToken = user.generateAccessToken()
+  const refreshToken = user.generateRefreshToken()
+
+  user.refreshToken = refreshToken
+  await user.save({ validateBeforeSave: false })
+
+  return { accessToken, refreshToken }
+}
+
 const registerUser = asyncHandler(async (req, res) => {
   const {username, email, password, fullname, role} = req.body
 
@@ -111,7 +129,52 @@ const verifyUser = asyncHandler(async (req, res) => {
 
 })
 
+const loginUser = asyncHandler(async (req, res) => {
+  const { email, username, password } = req.body
+
+  const user = await User.findOne({
+    $or: [{ email }, { username }]
+  })
+
+  if(!user) {
+    throw new ApiError(402, "Invalid user credentials")
+  }
+
+  const isPasswordValid = user.isPasswordValid(password)
+
+  if(!isPasswordValid) {
+    throw new ApiError(402, "Invalid user credentials")
+  }
+
+  const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id)
+
+  if(!accessToken || !refreshToken) {
+    throw new ApiError(502, "Tokens generation failed")
+  }
+
+  const loggedInUser = await User.findById(user._id)
+                                  .select("-password -refreshToken")
+
+  if(!loggedInUser) {
+    throw new ApiError(500, "Something went wrong, User not logged")
+  }
+
+  res.status(200)
+    .cookie("accessToken", accessToken)
+    .cookie("refreshToken", refreshToken)
+    .json(new ApiResponce(200, 
+      {
+        user: loggedInUser,
+        accessToken,
+        refreshToken
+      },
+      "User logged in successfully"
+    ))
+
+})
+
 export { 
   registerUser,
-  verifyUser
+  verifyUser,
+  loginUser
 }

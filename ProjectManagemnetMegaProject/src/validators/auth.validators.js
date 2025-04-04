@@ -1,4 +1,4 @@
-import { body, param } from 'express-validator'
+import { body, oneOf, param } from 'express-validator'
 import { User } from '../models/user.models.js'
 
 const userRegisterValidator = () => {
@@ -42,7 +42,28 @@ const userVerificationValidator = () => {
   ]
 }
 
+const userLoginValidator = () => {
+  return [
+    oneOf([
+      body("email")
+        .trim()
+        .isEmail().withMessage("Not a valid Email"),
+      body("username")
+        .trim()
+    ], {
+      message: 'Either email or username is required'
+    }),
+    body("password")
+      .trim()
+      .notEmpty().withMessage("Password is required")
+      .isLength({min: 8}).withMessage("Username should be more than 8 char")
+      .isLength({max: 20}).withMessage("Username cannot exceed more than 20 char")
+      .isStrongPassword({minUppercase: 1, minNumbers: 2,  minSymbols: 1}).withMessage("Password should contain at least 1 Uppcase letter, 1 Symbol and at least 2 number"),
+  ]
+}
+
 export { 
   userRegisterValidator,
-  userVerificationValidator
+  userVerificationValidator,
+  userLoginValidator
 }
