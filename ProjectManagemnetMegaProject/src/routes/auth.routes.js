@@ -1,7 +1,7 @@
 import { Router } from "express"
 import validate from "../middlewares/validator.middleware.js"
 import { userLoginValidator, userRegisterValidator, userVerificationValidator } from "../validators/auth.validators.js"
-import { getUserProfile, loginUser, logoutUser, registerUser, verifyUser } from "../controllers/auth.controllers.js"
+import { getUserProfile, loginUser, logoutUser, refreshAccessTonken, registerUser, verifyUser } from "../controllers/auth.controllers.js"
 import { upload } from "../middlewares/multer.middleware.js"
 import authenticateUser from "../middlewares/auth.middleware.js"
 
@@ -34,6 +34,11 @@ router.route('/logout').post(
 router.route('/profile').get(
   authenticateUser,
   getUserProfile
+)
+
+router.route('/refresh-tokens').get(
+  authenticateUser,
+  refreshAccessTonken
 )
 
 export default router

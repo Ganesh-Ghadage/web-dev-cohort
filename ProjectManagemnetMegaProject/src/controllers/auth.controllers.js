@@ -7,6 +7,7 @@ import fs from 'fs';
 import { sendVerifyMail } from "../utils/mail.js";
 import crypto from 'crypto';
 import { cookieOptions } from "../utils/constants.js";
+import jwt from 'jsonwebtoken';
 
 const generateAccessAndRefreshToken = async (userId) => {
   if(!userId) return null;
@@ -198,8 +199,50 @@ const logoutUser = asyncHandler(async (req, res) => {
     .json(new ApiResponce(200, loggedOutUser, "User logged out successfully"))
 })
 
-const getUserProfile = asyncHandler(async (req, res) => {
+const getUserProfile = asyncHandler((req, res) => {
   res.status(200).json(new ApiResponce(200, req?.user, "User profile fetched successfully"))
+})
+
+const refreshAccessTonken = asyncHandler(async (req, res) => {
+  const incomingRefreshToken = req.cookies?.refreshToken || req.body?.refreshToken
+
+  if(!incomingRefreshToken) {
+    throw new ApiError(403, "Unauthorized request")
+  }
+
+ try {
+   const decodedRefreshToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET)
+ 
+   const user = await User.findById(decodedRefreshToken._id)
+ 
+   if(!user) {
+     throw new ApiError(404, "Invalid refresh token")
+   }
+ 
+   if(incomingRefreshToken !== user?.refreshToken) {
+     throw new ApiError(403, "Invalid Refresh token")
+   }
+ 
+   const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id)
+ 
+   if(!accessToken || !refreshToken) {
+     throw new ApiError(502, "Tokens generation failed")
+   }
+ 
+   res.status(200)
+     .cookie("accessToken", accessToken, cookieOptions)
+     .cookie("refreshToken", refreshToken, cookieOptions)
+     .json(new ApiResponce(200, 
+       {
+         user,
+         accessToken,
+         refreshToken
+       },
+       "Access token refreshed"
+     ))
+ } catch (error) {
+    throw new ApiError(500, "Something went wrong, tokens not refreshed", error)
+ }
 })
 
 export { 
@@ -207,5 +250,6 @@ export {
   verifyUser,
   loginUser,
   logoutUser,
-  getUserProfile
+  getUserProfile,
+  refreshAccessTonken
 }
