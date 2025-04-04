@@ -6,6 +6,7 @@ import { deleteFromCloudinary, upolodOnClodinary } from "../utils/cloudinary.js"
 import fs from 'fs';
 import { sendVerifyMail } from "../utils/mail.js";
 import crypto from 'crypto';
+import { cookieOptions } from "../utils/constants.js";
 
 const generateAccessAndRefreshToken = async (userId) => {
   if(!userId) return null;
@@ -160,8 +161,8 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 
   res.status(200)
-    .cookie("accessToken", accessToken)
-    .cookie("refreshToken", refreshToken)
+    .cookie("accessToken", accessToken, cookieOptions)
+    .cookie("refreshToken", refreshToken, cookieOptions)
     .json(new ApiResponce(200, 
       {
         user: loggedInUser,
@@ -173,8 +174,33 @@ const loginUser = asyncHandler(async (req, res) => {
 
 })
 
+const logoutUser = asyncHandler(async (req, res) => {
+  const user = req.user
+
+  if(!user) {
+    throw new ApiError(403, "Unauthorized request")
+  }
+
+  const loggedOutUser = await User.findByIdAndUpdate(user._id,
+    {
+      $set: {
+        refreshToken: undefined
+      }
+    },
+    {
+      new: true
+    }
+  ).select("-password")
+
+  res.status(200)
+    .clearCookie("accessToken", cookieOptions)
+    .clearCookie("refreshToken", cookieOptions)
+    .json(new ApiResponce(200, loggedOutUser, "User logged out successfully"))
+})
+
 export { 
   registerUser,
   verifyUser,
-  loginUser
+  loginUser,
+  logoutUser
 }

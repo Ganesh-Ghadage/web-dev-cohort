@@ -13,3 +13,8 @@ export const taskStatusEnums = {
 }
 
 export const avaliableTaskStatus = Object.values(taskStatusEnums)
+
+export const cookieOptions = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production"
+}
