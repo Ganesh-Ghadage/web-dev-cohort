@@ -245,6 +245,31 @@ const refreshAccessTonken = asyncHandler(async (req, res) => {
  }
 })
 
+const resendEmailVerification = asyncHandler(async (req, res) => {
+  const { email, username, password, role } = req.body;
+
+  //validation
+});
+const resetForgottenPassword = asyncHandler(async (req, res) => {
+  const { email, username, password, role } = req.body;
+
+  //validation
+});
+
+
+const forgotPasswordRequest = asyncHandler(async (req, res) => {
+  const { email, username, password, role } = req.body;
+
+  //validation
+});
+
+const changeCurrentPassword = asyncHandler(async (req, res) => {
+  const { email, username, password, role } = req.body;
+
+  //validation
+});
+
+
 export { 
   registerUser,
   verifyUser,
