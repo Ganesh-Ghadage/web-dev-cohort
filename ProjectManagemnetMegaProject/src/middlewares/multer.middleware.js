@@ -5,9 +5,14 @@ const storage = multer.diskStorage({
     cb(null, './public/images')
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    cb(null, file.fieldname + '-' + uniqueSuffix + '.' + file.mimetype.split('/')[1])
+    const uniquePreffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, `${uniquePreffix}-${file.originalname}.${file.mimetype.split('/')[1]}`)
   }
 })
     
-export const upload = multer({ storage: storage })
+export const upload = multer({ 
+  storage,
+  limits: {
+    fileSize: 1 * 1000 * 1000,
+  },
+})
