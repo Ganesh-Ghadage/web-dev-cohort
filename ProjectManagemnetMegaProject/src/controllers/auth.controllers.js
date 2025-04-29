@@ -78,7 +78,7 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     // send emilaVerificationToken to user
-    await sendVerifyMail(email, unHashedToken)
+    await sendVerifyMail(username, email, unHashedToken)
 
     res.status(201).json(new ApiResponce(201, user, "User registered sucessfully"))
 
@@ -246,10 +246,40 @@ const refreshAccessTonken = asyncHandler(async (req, res) => {
 })
 
 const resendEmailVerification = asyncHandler(async (req, res) => {
-  const { email, username, password, role } = req.body;
+  const { _id, email, username } = req.user;
 
-  //validation
+  try {
+    const user = await User.findById(
+      _id
+    ).select(
+      "-password -refreshToken"
+    )
+
+    if(!user) {
+      throw new ApiError(404, "User not found")
+    }
+
+    if(user.isEmailVerified) {
+      throw new ApiError(400, "User already verified")
+    }
+
+    const { unHashedToken, hashedToken, tokenExpiry } = user.generateEmailToken()
+
+    user.emailVerificationToken = hashedToken
+    user.emailVerificationExpiry = tokenExpiry
+    await user.save()
+
+    await sendVerifyMail(username, email, unHashedToken)
+
+    res.status(201).json(new ApiResponce(201, user, "Verification mail sent successfully"))
+
+  } catch (error) {
+    console.error("Error:", error)
+
+    throw new ApiError(error?.statusCode || 500, error?.message || "Someting went wrong while generating verification mail", error)
+  }
 });
+
 const resetForgottenPassword = asyncHandler(async (req, res) => {
   const { email, username, password, role } = req.body;
 
@@ -276,5 +306,9 @@ export {
   loginUser,
   logoutUser,
   getUserProfile,
-  refreshAccessTonken
+  refreshAccessTonken,
+  resendEmailVerification,
+  resetForgottenPassword,
+  forgotPasswordRequest,
+  changeCurrentPassword
 }
