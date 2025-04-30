@@ -1,7 +1,7 @@
 import { Router } from "express"
 import validate from "../middlewares/validator.middleware.js"
-import { changeCurrentPasswordValidator, userLoginValidator, userRegisterValidator, userVerificationValidator, forgotPasswordRequestValidator } from "../validators/auth.validators.js"
-import { getUserProfile, loginUser, logoutUser, refreshAccessTonken, registerUser, verifyUser, resendEmailVerification, changeCurrentPassword, forgotPasswordRequest } from "../controllers/auth.controllers.js"
+import { changeCurrentPasswordValidator, userLoginValidator, userRegisterValidator, userVerificationValidator, forgotPasswordRequestValidator, resetForgottenPasswordValidator } from "../validators/auth.validators.js"
+import { getUserProfile, loginUser, logoutUser, refreshAccessTonken, registerUser, verifyUser, resendEmailVerification, changeCurrentPassword, forgotPasswordRequest, resetForgottenPassword } from "../controllers/auth.controllers.js"
 import { upload } from "../middlewares/multer.middleware.js"
 import authenticateUser from "../middlewares/auth.middleware.js"
 
@@ -57,6 +57,12 @@ router.route('/send-password-reset-request').post(
   forgotPasswordRequestValidator(),
   validate,
   forgotPasswordRequest
+)
+
+router.route('/rest-password/:token').post(
+  resetForgottenPasswordValidator(),
+  validate,
+  resetForgottenPassword
 )
 
 export default router

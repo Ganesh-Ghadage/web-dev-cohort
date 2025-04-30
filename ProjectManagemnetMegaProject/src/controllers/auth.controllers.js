@@ -282,9 +282,34 @@ const resendEmailVerification = asyncHandler(async (req, res) => {
 });
 
 const resetForgottenPassword = asyncHandler(async (req, res) => {
-  const { email, username, password, role } = req.body;
+  const { token } = req.params;
+  const { newPassword } = req.body
 
-  //validation
+  try {
+    const hashedToken = crypto.createHash("sha256").update(token).digest('hex')
+
+    const user = await User.findOne({forgotPasswordToken: hashedToken})
+
+    if(!user) {
+      throw new ApiError(404, "Invalid token")
+    }
+
+    if(user.forgotPasswordExpiry <= Date.now()) {
+      throw new ApiError(406, "Password reset token expired")
+    }
+
+    user.forgotPasswordToken = undefined
+    user.forgotPasswordExpiry = undefined
+    user.password = newPassword
+
+    await user.save()
+
+    return res.status(200).json(new ApiResponce(200, { }, "Password changed successfully"))
+  } catch (error) {
+    console.error("Error:", error)
+
+    throw new ApiError(error?.statusCode || 500, error?.message || "Someting went wrong while reseting password", error)
+  }
 });
 
 
@@ -312,7 +337,7 @@ const forgotPasswordRequest = asyncHandler(async (req, res) => {
   } catch (error) {
     console.error("Error:", error)
 
-    throw new ApiError(error?.statusCode || 500, error?.message || "Someting went wrong while sendung password reset mail", error)
+    throw new ApiError(error?.statusCode || 500, error?.message || "Someting went wrong while sending password reset mail", error)
   }
 });
 
