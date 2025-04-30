@@ -88,9 +88,24 @@ const changeCurrentPasswordValidator = () => {
   ]
 }
 
+const forgotPasswordRequestValidator = () => {
+  return [
+    oneOf([
+      body("email")
+        .trim()
+        .isEmail().withMessage("Not a valid Email"),
+      body("username")
+        .trim()
+    ], {
+      message: 'Either email or username is required'
+    }),
+  ]
+}
+
 export { 
   userRegisterValidator,
   userVerificationValidator,
   userLoginValidator,
-  changeCurrentPasswordValidator
+  changeCurrentPasswordValidator,
+  forgotPasswordRequestValidator
 }

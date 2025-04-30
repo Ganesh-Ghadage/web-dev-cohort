@@ -4,7 +4,7 @@ import { User } from "../models/user.models.js"
 import { ApiError } from "../utils/api-error.js";
 import { deleteFromCloudinary, upolodOnClodinary } from "../utils/cloudinary.js";
 import fs from 'fs';
-import { sendVerifyMail } from "../utils/mail.js";
+import { sendForgotPasswordMail, sendVerifyMail } from "../utils/mail.js";
 import crypto from 'crypto';
 import { cookieOptions } from "../utils/constants.js";
 import jwt from 'jsonwebtoken';
@@ -289,9 +289,31 @@ const resetForgottenPassword = asyncHandler(async (req, res) => {
 
 
 const forgotPasswordRequest = asyncHandler(async (req, res) => {
-  const { email, username, password, role } = req.body;
+  const { email, username } = req.body;
 
-  //validation
+  try {
+    const user = await User.findOne({
+      $or: [{ email }, { username }]
+    })
+  
+    if(!user) {
+      throw new ApiError(404, "User not found")
+    }
+
+    const { unHashedToken, hashedToken, tokenExpiry } = user.generateEmailToken()
+
+    user.forgotPasswordToken = hashedToken
+    user.forgotPasswordExpiry = tokenExpiry
+    await user.save()
+
+    await sendForgotPasswordMail(username, email || user.email, unHashedToken)
+
+    return res.status(200).json(new ApiResponce(200, user, "Password reset mail sent successfully"))
+  } catch (error) {
+    console.error("Error:", error)
+
+    throw new ApiError(error?.statusCode || 500, error?.message || "Someting went wrong while sendung password reset mail", error)
+  }
 });
 
 const changeCurrentPassword = asyncHandler(async (req, res) => {
