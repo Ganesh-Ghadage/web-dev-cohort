@@ -109,7 +109,7 @@ async function sendForgotPasswordMail(username, email, token) {
         username,
         email,
         subject: "Reset your password",
-        mailgenContent: emailVerificationMailgenContent(username, `${process.env.BASE_URL}/api/v1/users/rest-password/${token}`)
+        mailgenContent: forgotPasswordMailgenContent(username, `${process.env.BASE_URL}/api/v1/users/rest-password/${token}`)
     }
 
     const info = await sendMail(options)
