@@ -56,8 +56,34 @@ const userLoginValidator = () => {
     body("password")
       .trim()
       .notEmpty().withMessage("Password is required")
-      .isLength({min: 8}).withMessage("Username should be more than 8 char")
-      .isLength({max: 20}).withMessage("Username cannot exceed more than 20 char")
+      .isLength({min: 8}).withMessage("Password should be more than 8 char")
+      .isLength({max: 20}).withMessage("Password cannot exceed more than 20 char")
+      .isStrongPassword({minUppercase: 1, minNumbers: 2,  minSymbols: 1}).withMessage("Password should contain at least 1 Uppcase letter, 1 Symbol and at least 2 number"),
+  ]
+}
+
+const changeCurrentPasswordValidator = () => {
+  return [
+    oneOf([
+      body("email")
+        .trim()
+        .isEmail().withMessage("Not a valid Email"),
+      body("username")
+        .trim()
+    ], {
+      message: 'Either email or username is required'
+    }),
+    body("newPassword")
+      .trim()
+      .notEmpty().withMessage("new password is required")
+      .isLength({min: 8}).withMessage("Password should be more than 8 char")
+      .isLength({max: 20}).withMessage("Password cannot exceed more than 20 char")
+      .isStrongPassword({minUppercase: 1, minNumbers: 2,  minSymbols: 1}).withMessage("Password should contain at least 1 Uppcase letter, 1 Symbol and at least 2 number"),
+    body("oldPassword")
+      .trim()
+      .notEmpty().withMessage("old password is required")
+      .isLength({min: 8}).withMessage("Password should be more than 8 char")
+      .isLength({max: 20}).withMessage("Password cannot exceed more than 20 char")
       .isStrongPassword({minUppercase: 1, minNumbers: 2,  minSymbols: 1}).withMessage("Password should contain at least 1 Uppcase letter, 1 Symbol and at least 2 number"),
   ]
 }
@@ -65,5 +91,6 @@ const userLoginValidator = () => {
 export { 
   userRegisterValidator,
   userVerificationValidator,
-  userLoginValidator
+  userLoginValidator,
+  changeCurrentPasswordValidator
 }

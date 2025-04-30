@@ -8,6 +8,7 @@ import { sendVerifyMail } from "../utils/mail.js";
 import crypto from 'crypto';
 import { cookieOptions } from "../utils/constants.js";
 import jwt from 'jsonwebtoken';
+import bcrypt from "bcryptjs";
 
 const generateAccessAndRefreshToken = async (userId) => {
   if(!userId) return null;
@@ -139,13 +140,13 @@ const loginUser = asyncHandler(async (req, res) => {
   })
 
   if(!user) {
-    throw new ApiError(402, "Invalid user credentials")
+    throw new ApiError(403, "Invalid user credentials")
   }
 
-  const isPasswordValid = user.isPasswordValid(password)
+  const isPasswordValid = await user.isPasswordValid(password)
 
   if(!isPasswordValid) {
-    throw new ApiError(402, "Invalid user credentials")
+    throw new ApiError(403, "Invalid user credentials")
   }
 
   const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id)
@@ -294,9 +295,35 @@ const forgotPasswordRequest = asyncHandler(async (req, res) => {
 });
 
 const changeCurrentPassword = asyncHandler(async (req, res) => {
-  const { email, username, password, role } = req.body;
+  const { email, username, newPassword, oldPassword } = req.body
 
-  //validation
+  console.log(newPassword, '-', oldPassword)
+
+  try {
+    const user = await User.findOne({
+      $or: [{ email }, { username }]
+    })
+  
+    if(!user) {
+      throw new ApiError(403, "Invalid user credentials")
+    }
+  
+    const isPasswordValid = await user.isPasswordValid(oldPassword)
+  
+    if(!isPasswordValid) {
+      throw new ApiError(403, "Invalid user credentials")
+    }
+
+    user.password = newPassword.trim()
+    await user.save()
+
+    return res.status(200).json(new ApiResponce(200, {}, "User Password updated successfully"))
+     
+  } catch (error) {
+    console.error("Something went wrong while updating password - ", error)
+
+    throw new ApiError(error?.statusCode || 500,  error?.message || "Something went wrong while updating password", error)
+  }
 });
 
 
