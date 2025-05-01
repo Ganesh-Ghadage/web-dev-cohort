@@ -30,7 +30,15 @@ const createProject = asyncHandler(async (req, res) => {
 });
 
 const getProjects = async (req, res) => {
-  // get all projects
+  const projects = await Project.find();
+
+  if (!projects) {
+    throw new ApiError(404, "Projects not found");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponce(200, projects, "All projects fetched successfully"));
 };
 
 const getProjectById = async (req, res) => {
