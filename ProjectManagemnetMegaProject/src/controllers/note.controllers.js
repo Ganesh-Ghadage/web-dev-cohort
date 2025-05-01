@@ -75,7 +75,21 @@ const updateNote = async (req, res) => {
 };
 
 const deleteNote = async (req, res) => {
-  // delete note
+  const { id } = req.params;
+
+  const notes = await ProjectNote.findById({
+    id,
+  });
+
+  if (!notes) {
+    throw new ApiError(404, "Notes not found");
+  }
+
+  await ProjectNote.findByIdAndDelete(id);
+
+  return res
+    .status(200)
+    .json(new ApiResponce(200, notes, "Notes deleted successfully"));
 };
 
 export { createNote, deleteNote, getNoteById, getNotes, updateNote };

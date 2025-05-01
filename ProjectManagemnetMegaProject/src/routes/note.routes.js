@@ -2,6 +2,7 @@ import { Router } from "express";
 import authenticateUser from "../middlewares/auth.middleware.js";
 import {
   createNote,
+  deleteNote,
   getNoteById,
   getNotes,
   updateNote,
@@ -28,5 +29,9 @@ router
 router
   .route('/update-note/:id')
   .patch(authenticateUser, updateNoteValidator(), validate, updateNote)
-  
+
+router
+  .route('/delete-note/:id')
+  .delete(authenticateUser, noteIdParamsValidator(), validate, deleteNote)
+
 export default router;
