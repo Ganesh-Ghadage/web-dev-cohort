@@ -49,13 +49,21 @@ const getNoteById = async (req, res) => {
     .json(new ApiResponce(200, notes, "All notes fetched successfully"));
 };
 
-const updateNote = async (req, res) => {
+const updateNote = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { content } = req.body;
 
-  const notes = await ProjectNote.findByIdAndUpdate(
+  const note = await ProjectNote.findById({
+    id,
+  });
+
+  if (!note) {
+    throw new ApiError(404, "Notes not found");
+  }
+
+  const updatedNote = await ProjectNote.findByIdAndUpdate(
     {
-      id,
+      _id: id,
     },
     {
       content,
@@ -65,14 +73,10 @@ const updateNote = async (req, res) => {
     },
   );
 
-  if (!notes) {
-    throw new ApiError(404, "Notes not found");
-  }
-
   return res
     .status(200)
-    .json(new ApiResponce(200, notes, "All notes fetched successfully"));
-};
+    .json(new ApiResponce(200, updatedNote, "Note updated successfully"));
+});
 
 const deleteNote = async (req, res) => {
   const { id } = req.params;
@@ -89,7 +93,7 @@ const deleteNote = async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponce(200, notes, "Notes deleted successfully"));
+    .json(new ApiResponce(200, note, "Notes deleted successfully"));
 };
 
 export { createNote, deleteNote, getNoteById, getNotes, updateNote };
