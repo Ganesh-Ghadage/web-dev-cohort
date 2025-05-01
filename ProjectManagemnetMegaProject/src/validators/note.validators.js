@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 
 const createNoteValidator = () => {
   return [
@@ -12,4 +12,17 @@ const createNoteValidator = () => {
   ];
 };
 
-export { createNoteValidator };
+const noteIdParamsValidator = () => {
+  return [
+    param("id")
+      .trim()
+      .notEmpty("Note id is required")
+      .isMongoId()
+      .withMessage("Invalid mongo Id"),
+  ];
+};
+
+export { 
+  createNoteValidator,
+  noteIdParamsValidator
+};

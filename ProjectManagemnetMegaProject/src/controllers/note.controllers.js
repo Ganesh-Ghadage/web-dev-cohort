@@ -25,7 +25,7 @@ const getNotes = asyncHandler(async (req, res) => {
   const notes = await ProjectNote.find();
 
   if (!notes) {
-    throw new ApiError(404, "Notes for found");
+    throw new ApiError(404, "Notes not found");
   }
 
   return res
@@ -34,7 +34,19 @@ const getNotes = asyncHandler(async (req, res) => {
 });
 
 const getNoteById = async (req, res) => {
-  // get note by id
+  const { id } =  req.params
+
+  const notes = await ProjectNote.findById({
+    id
+  });
+
+  if (!notes) {
+    throw new ApiError(404, "Notes not found");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponce(200, notes, "All notes fetched successfully"));
 };
 
 const updateNote = async (req, res) => {
