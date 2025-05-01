@@ -42,7 +42,17 @@ const getProjects = async (req, res) => {
 };
 
 const getProjectById = async (req, res) => {
-  // get project by id
+  const { id } = req.params;
+
+  const project = await Project.findById(id);
+
+  if (!project) {
+    throw new ApiError(404, "Project not found");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponce(200, project, "Project fetched successfully"));
 };
 
 const updateProject = async (req, res) => {
