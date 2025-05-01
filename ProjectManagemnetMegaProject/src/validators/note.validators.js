@@ -22,7 +22,17 @@ const noteIdParamsValidator = () => {
   ];
 };
 
+const updateNoteValidator = () => {
+  return [
+    noteIdParamsValidator(),
+    body("content")
+      .trim()
+      .notEmpty().withMessage("Note content is required"),
+  ]
+}
+
 export { 
   createNoteValidator,
-  noteIdParamsValidator
+  noteIdParamsValidator,
+  updateNoteValidator
 };

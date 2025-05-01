@@ -4,10 +4,12 @@ import {
   createNote,
   getNoteById,
   getNotes,
+  updateNote,
 } from "../controllers/note.controllers.js";
 import {
   createNoteValidator,
   noteIdParamsValidator,
+  updateNoteValidator,
 } from "../validators/note.validators.js";
 import validate from "../middlewares/validator.middleware.js";
 
@@ -23,4 +25,8 @@ router
   .route("/get-note/:id")
   .get(authenticateUser, noteIdParamsValidator(), validate, getNoteById);
 
+router
+  .route('/update-note/:id')
+  .patch(authenticateUser, updateNoteValidator(), validate, updateNote)
+  
 export default router;
