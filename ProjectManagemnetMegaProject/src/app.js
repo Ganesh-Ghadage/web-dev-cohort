@@ -5,6 +5,7 @@ import { errorHandler } from "./middlewares/errors.middleware.js";
 
 import healthCheckRouter from "./routes/healthcheck.routes.js";
 import userRouter from "./routes/auth.routes.js";
+import noteRouter from "./routes/note.routes.js"
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(express.static("public"));
 
 app.use("/api/v1/healthCheck", healthCheckRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/projectNotes", noteRouter);
 
 // error handling middleware, PS: It should be at last to handle all errors
 app.use(errorHandler);

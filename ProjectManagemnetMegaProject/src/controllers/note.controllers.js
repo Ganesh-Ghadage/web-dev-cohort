@@ -3,6 +3,24 @@ import { ApiResponce } from "../utils/api-responce.js";
 import { ApiError } from "../utils/api-error.js";
 import { ProjectNote } from "../models/note.models.js";
 
+const createNote = async (req, res) => {
+  const { projectId, content } = req.body;
+
+  const note = await ProjectNote.create({
+    project: projectId,
+    createdBy: req.user._id,
+    content,
+  });
+
+  if (!note) {
+    throw new ApiError(502, "Note creation failed");
+  }
+
+  return res
+    .status(201)
+    .json(new ApiResponce(201, note, "Note created successfully"));
+};
+
 const getNotes = asyncHandler(async (req, res) => {
   const notes = await ProjectNote.find();
 
@@ -17,10 +35,6 @@ const getNotes = asyncHandler(async (req, res) => {
 
 const getNoteById = async (req, res) => {
   // get note by id
-};
-
-const createNote = async (req, res) => {
-  // create note
 };
 
 const updateNote = async (req, res) => {
