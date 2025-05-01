@@ -53,29 +53,18 @@ const updateNote = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { content } = req.body;
 
-  const note = await ProjectNote.findById({
-    id,
-  });
+  const note = await ProjectNote.findById(id);
 
   if (!note) {
     throw new ApiError(404, "Notes not found");
   }
 
-  const updatedNote = await ProjectNote.findByIdAndUpdate(
-    {
-      _id: id,
-    },
-    {
-      content,
-    },
-    {
-      new: true,
-    },
-  );
+  note.content = content;
+  await note.save({validateBeforeSave: false})
 
   return res
     .status(200)
-    .json(new ApiResponce(200, updatedNote, "Note updated successfully"));
+    .json(new ApiResponce(200, note, "Note updated successfully"));
 });
 
 const deleteNote = async (req, res) => {
