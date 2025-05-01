@@ -1,13 +1,40 @@
+import { asyncHandler } from "../utils/async-handler.js";
+import { ApiResponce } from "../utils/api-responce.js";
+import { ApiError } from "../utils/api-error.js";
+import { Project } from "../models/project.models.js";
+
+const createProject = asyncHandler(async (req, res) => {
+  const { name, description } = req.body;
+
+  const project = await Project.findOne({
+    name,
+  });
+
+  if (project) {
+    throw new ApiError(400, `Project with ${name} already exits`);
+  }
+
+  const createdProject = await Project.create({
+    name,
+    description,
+    createdBy: req.user._id,
+  });
+
+  if (!createdProject) {
+    throw new ApiError(400, "Project creation failed");
+  }
+
+  return res
+    .status(201)
+    .json(new ApiResponce(200, createdProject, "Project created successfully"));
+});
+
 const getProjects = async (req, res) => {
   // get all projects
 };
 
 const getProjectById = async (req, res) => {
   // get project by id
-};
-
-const createProject = async (req, res) => {
-  // create project
 };
 
 const updateProject = async (req, res) => {
