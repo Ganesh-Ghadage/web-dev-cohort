@@ -56,7 +56,31 @@ const getProjectById = async (req, res) => {
 };
 
 const updateProject = async (req, res) => {
-  // update project
+  const { id } = req.params;
+  const { name, description } = req.body;
+
+  const project = await Project.findById(id);
+
+  if (!project) {
+    throw new ApiError(404, "Project not found");
+  }
+
+  const updatedProject = await Project.findByIdAndUpdate(
+    {
+      _id: id,
+    },
+    {
+      name,
+      description,
+    },
+    {
+      new: true,
+    },
+  );
+
+  return res
+    .status(200)
+    .json(new ApiResponce(200, updatedProject, "Project updated sccessfully"));
 };
 
 const deleteProject = async (req, res) => {

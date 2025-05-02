@@ -21,7 +21,15 @@ const projectIdParamsValidator = () => {
   ]
 }
 
+const updatedProjectValidator = () => {
+  return [
+    projectIdParamsValidator(),
+    createProjectValidator()
+  ]
+}
+
 export {
   createProjectValidator,
-  projectIdParamsValidator
+  projectIdParamsValidator,
+  updatedProjectValidator
 }
