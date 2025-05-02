@@ -4,6 +4,7 @@ import validate from "../middlewares/validator.middleware.js";
 import { createProjectValidator, projectIdParamsValidator, updatedProjectValidator } from "../validators/project.validators.js";
 import {
   createProject,
+  deleteProject,
   getProjectById,
   getProjects,
   updateProject,
@@ -26,5 +27,10 @@ router
 router
   .route('/update-project/:id')
   .post(authenticateUser, updatedProjectValidator(), validate, updateProject)
+
+router
+  .route('/delete-project/:id')
+  .delete(authenticateUser, projectIdParamsValidator(), validate, deleteProject)
+
 
 export default router;
