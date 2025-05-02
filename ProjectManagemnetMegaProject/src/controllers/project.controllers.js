@@ -29,7 +29,7 @@ const createProject = asyncHandler(async (req, res) => {
     .json(new ApiResponce(200, createdProject, "Project created successfully"));
 });
 
-const getProjects = async (req, res) => {
+const getProjects = asyncHandler(async (req, res) => {
   const projects = await Project.find();
 
   if (!projects) {
@@ -39,9 +39,9 @@ const getProjects = async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponce(200, projects, "All projects fetched successfully"));
-};
+});
 
-const getProjectById = async (req, res) => {
+const getProjectById = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   const project = await Project.findById(id);
@@ -53,9 +53,9 @@ const getProjectById = async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponce(200, project, "Project fetched successfully"));
-};
+});
 
-const updateProject = async (req, res) => {
+const updateProject = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { name, description } = req.body;
 
@@ -81,7 +81,7 @@ const updateProject = async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponce(200, updatedProject, "Project updated sccessfully"));
-};
+});
 
 const deleteProject = asyncHandler(async (req, res) => {
   const { id } = req.params;
@@ -99,21 +99,21 @@ const deleteProject = asyncHandler(async (req, res) => {
     .json(new ApiResponce(200, {}, "Project deleted sccessfully"));
 });
 
-const getProjectMembers = async (req, res) => {
+const getProjectMembers = asyncHandler(async (req, res) => {
   // get project members
-};
+});
 
-const addMemberToProject = async (req, res) => {
+const addMemberToProject = asyncHandler(async (req, res) => {
   // add member to project
-};
+});
 
-const deleteMember = async (req, res) => {
+const deleteMember = asyncHandler(async (req, res) => {
   // delete member from project
-};
+});
 
-const updateMemberRole = async (req, res) => {
+const updateMemberRole = asyncHandler(async (req, res) => {
   // update member role
-};
+});
 
 export {
   addMemberToProject,
