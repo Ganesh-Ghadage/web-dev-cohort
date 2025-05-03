@@ -10,6 +10,8 @@ import {
   getProjects,
   updateProject,
 } from "../controllers/project.controllers.js";
+import { checkUserPermission } from "../middlewares/permissions.middleware.js";
+import { userRoleEnums } from "../utils/constants.js";
 
 const router = Router();
 
@@ -20,11 +22,11 @@ router
 
 router
   .route('/:projectId')
-  .get(authenticateUser, projectIdParamsValidator(), validate, getProjectById)
-  .post(authenticateUser, updatedProjectValidator(), validate, updateProject)
-  .delete(authenticateUser, projectIdParamsValidator(), validate, deleteProject)
+  .get(authenticateUser, checkUserPermission([userRoleEnums.ADMIN, userRoleEnums.PROJECT_ADMIN, userRoleEnums.MEMBER]), projectIdParamsValidator(), validate, getProjectById)
+  .post(authenticateUser, checkUserPermission([userRoleEnums.ADMIN, userRoleEnums.PROJECT_ADMIN]), updatedProjectValidator(), validate, updateProject)
+  .delete(authenticateUser, checkUserPermission([userRoleEnums.ADMIN, userRoleEnums.PROJECT_ADMIN]), projectIdParamsValidator(), validate, deleteProject)
 
 router
-  .route('/:projectId/add-member')
-  .post(authenticateUser, addMemberToProjectValidator(), validate, addMemberToProject)
+  .route('/:projectId/member')
+  .post(authenticateUser, checkUserPermission([userRoleEnums.ADMIN, userRoleEnums.PROJECT_ADMIN]), addMemberToProjectValidator(), validate, addMemberToProject)
 export default router;
