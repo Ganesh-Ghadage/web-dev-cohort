@@ -55,7 +55,7 @@ const getProjectById = asyncHandler(async (req, res) => {
   const { projectId } = req.params;
 
   const project = await Project.findById({
-    _id: new mongoose.Types.ObjectId(projectId)
+    _id: new mongoose.Types.ObjectId(projectId),
   });
 
   if (!project) {
@@ -72,7 +72,7 @@ const updateProject = asyncHandler(async (req, res) => {
   const { name, description } = req.body;
 
   const project = await Project.findById({
-    _id: new mongoose.Types.ObjectId(projectId)
+    _id: new mongoose.Types.ObjectId(projectId),
   });
 
   if (!project) {
@@ -101,7 +101,7 @@ const deleteProject = asyncHandler(async (req, res) => {
   const { projectId } = req.params;
 
   const project = await Project.findById({
-    _id: new mongoose.Types.ObjectId(projectId)
+    _id: new mongoose.Types.ObjectId(projectId),
   });
 
   if (!project) {
@@ -109,7 +109,7 @@ const deleteProject = asyncHandler(async (req, res) => {
   }
 
   await Project.findByIdAndDelete({
-    _id: new mongoose.Types.ObjectId(projectId)
+    _id: new mongoose.Types.ObjectId(projectId),
   });
 
   return res
@@ -141,6 +141,15 @@ const addMemberToProject = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Project doesn't exists");
   }
 
+  const exsitingProjectMember = await ProjectMember.findOne({
+    user: new mongoose.Types.ObjectId(userId),
+    project: new mongoose.Types.ObjectId(projectId),
+  });
+
+  if(exsitingProjectMember && exsitingProjectMember.role === role) {
+    throw new ApiError(406, "User is already part of this project")
+  }
+
   const projectMember = await ProjectMember.create({
     user: user._id,
     project: project._id,
@@ -157,7 +166,7 @@ const addMemberToProject = asyncHandler(async (req, res) => {
       new ApiResponce(
         201,
         projectMember,
-        `${user.name} has been added in ${project.name} as ${role}`,
+        `${user.username} has been added in ${project.name} as ${role}`,
       ),
     );
 });
