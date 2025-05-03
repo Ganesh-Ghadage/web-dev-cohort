@@ -17,21 +17,14 @@ import validate from "../middlewares/validator.middleware.js";
 const router = Router();
 
 router
-  .route("/create-note")
-  .post(authenticateUser, createNoteValidator(), validate, createNote);
-
-router.route("/get-all-notes").get(authenticateUser, getNotes);
-
-router
-  .route("/get-note/:id")
-  .get(authenticateUser, noteIdParamsValidator(), validate, getNoteById);
+  .route("/")
+  .post(authenticateUser, createNoteValidator(), validate, createNote)
+  .get(authenticateUser, getNotes);
 
 router
-  .route('/update-note/:id')
+  .route("/:noteId")
+  .get(authenticateUser, noteIdParamsValidator(), validate, getNoteById)
   .patch(authenticateUser, updateNoteValidator(), validate, updateNote)
-
-router
-  .route('/delete-note/:id')
   .delete(authenticateUser, noteIdParamsValidator(), validate, deleteNote)
 
 export default router;
