@@ -5,6 +5,7 @@ import { Project } from "../models/project.models.js";
 import { ProjectMember } from "../models/projectmember.models.js";
 import { User } from "../models/user.models.js";
 import mongoose from "mongoose";
+import { userRoleEnums } from "../utils/constants.js";
 
 const createProject = asyncHandler(async (req, res) => {
   const { name, description } = req.body;
@@ -26,6 +27,12 @@ const createProject = asyncHandler(async (req, res) => {
   if (!createdProject) {
     throw new ApiError(400, "Project creation failed");
   }
+
+  const projectMember = await ProjectMember.create({
+    user: req.user._id,
+    project: createdProject._id,
+    role: userRoleEnums.ADMIN,
+  });
 
   return res
     .status(201)
