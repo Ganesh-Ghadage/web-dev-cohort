@@ -2,6 +2,9 @@ import { asyncHandler } from "../utils/async-handler.js";
 import { ApiResponce } from "../utils/api-responce.js";
 import { ApiError } from "../utils/api-error.js";
 import { Project } from "../models/project.models.js";
+import { ProjectMember } from "../models/projectmember.models.js";
+import { User } from "../models/user.models.js";
+import mongoose from "mongoose";
 
 const createProject = asyncHandler(async (req, res) => {
   const { name, description } = req.body;
@@ -92,7 +95,7 @@ const deleteProject = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Project not found");
   }
 
-  await Project.findByIdAndDelete(id)
+  await Project.findByIdAndDelete(id);
 
   return res
     .status(200)
@@ -104,7 +107,44 @@ const getProjectMembers = asyncHandler(async (req, res) => {
 });
 
 const addMemberToProject = asyncHandler(async (req, res) => {
-  // add member to project
+  const { userId, role } = req.body;
+  const { projectId } = req.params;
+
+  const user = await User.findById({
+    _id: new mongoose.Types.ObjectId(userId),
+  });
+
+  if (!user) {
+    throw new ApiError(404, "User doesn't exists");
+  }
+
+  const project = await Project.findById({
+    _id: new mongoose.Types.ObjectId(projectId),
+  });
+
+  if (!project) {
+    throw new ApiError(404, "Project doesn't exists");
+  }
+
+  const projectMember = await ProjectMember.create({
+    user: user._id,
+    project: project._id,
+    role,
+  });
+
+  if (!projectMember) {
+    throw new ApiError(400, "Project member creation failed");
+  }
+
+  return res
+    .status(201)
+    .json(
+      new ApiResponce(
+        201,
+        projectMember,
+        `${user.name} has been added in ${project.name} as ${role}`,
+      ),
+    );
 });
 
 const deleteMember = asyncHandler(async (req, res) => {

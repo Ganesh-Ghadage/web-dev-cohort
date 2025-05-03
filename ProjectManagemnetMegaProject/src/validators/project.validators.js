@@ -1,4 +1,5 @@
 import { body, param } from "express-validator";
+import { avaliableUserRoles } from "../utils/constants.js";
 
 const createProjectValidator = () => {
   return [
@@ -28,8 +29,26 @@ const updatedProjectValidator = () => {
   ]
 }
 
+const addMemberToProjectValidator = () => {
+  return [
+    param("projectId")
+      .trim()
+      .notEmpty().withMessage("Project id is required")
+      .isMongoId().withMessage("Invalid mongo Id"),
+    body("userId")
+      .trim()
+      .notEmpty().withMessage("User id is required")
+      .isMongoId().withMessage("Invalid mongo Id"),
+    body("role")
+      .trim()
+      .notEmpty().withMessage("User role is required")
+      .isIn(avaliableUserRoles)
+  ]
+}
+
 export {
   createProjectValidator,
   projectIdParamsValidator,
-  updatedProjectValidator
+  updatedProjectValidator,
+  addMemberToProjectValidator
 }

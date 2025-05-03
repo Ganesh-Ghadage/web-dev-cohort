@@ -1,8 +1,9 @@
 import { Router } from "express";
 import authenticateUser from "../middlewares/auth.middleware.js";
 import validate from "../middlewares/validator.middleware.js";
-import { createProjectValidator, projectIdParamsValidator, updatedProjectValidator } from "../validators/project.validators.js";
+import { addMemberToProjectValidator, createProjectValidator, projectIdParamsValidator, updatedProjectValidator } from "../validators/project.validators.js";
 import {
+  addMemberToProject,
   createProject,
   deleteProject,
   getProjectById,
@@ -32,5 +33,7 @@ router
   .route('/delete-project/:id')
   .delete(authenticateUser, projectIdParamsValidator(), validate, deleteProject)
 
-
+router
+  .route('/:projectId/add-member')
+  .post(authenticateUser, addMemberToProjectValidator(), validate, addMemberToProject)
 export default router;
