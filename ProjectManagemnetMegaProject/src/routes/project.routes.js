@@ -14,23 +14,14 @@ import {
 const router = Router();
 
 router
-  .route("/create-project")
-  .post(authenticateUser, createProjectValidator(), validate, createProject);
-
-router
-  .route("/get-all-projects")
+  .route("/")
+  .post(authenticateUser, createProjectValidator(), validate, createProject)
   .get(authenticateUser, getProjects);
 
 router
-  .route('/get-project/:id')
+  .route('/:projectId')
   .get(authenticateUser, projectIdParamsValidator(), validate, getProjectById)
-
-router
-  .route('/update-project/:id')
   .post(authenticateUser, updatedProjectValidator(), validate, updateProject)
-
-router
-  .route('/delete-project/:id')
   .delete(authenticateUser, projectIdParamsValidator(), validate, deleteProject)
 
 router
