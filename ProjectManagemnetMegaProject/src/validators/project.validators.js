@@ -15,7 +15,7 @@ const createProjectValidator = () => {
 
 const projectIdParamsValidator = () => {
   return [
-    param("id")
+    param("projectId")
       .trim()
       .notEmpty().withMessage("Project id is required")
       .isMongoId().withMessage("Invalid mongo Id")

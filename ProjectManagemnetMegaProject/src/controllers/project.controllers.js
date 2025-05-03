@@ -45,9 +45,11 @@ const getProjects = asyncHandler(async (req, res) => {
 });
 
 const getProjectById = asyncHandler(async (req, res) => {
-  const { id } = req.params;
+  const { projectId } = req.params;
 
-  const project = await Project.findById(id);
+  const project = await Project.findById({
+    _id: new mongoose.Types.ObjectId(projectId)
+  });
 
   if (!project) {
     throw new ApiError(404, "Project not found");
@@ -59,10 +61,12 @@ const getProjectById = asyncHandler(async (req, res) => {
 });
 
 const updateProject = asyncHandler(async (req, res) => {
-  const { id } = req.params;
+  const { projectId } = req.params;
   const { name, description } = req.body;
 
-  const project = await Project.findById(id);
+  const project = await Project.findById({
+    _id: new mongoose.Types.ObjectId(projectId)
+  });
 
   if (!project) {
     throw new ApiError(404, "Project not found");
@@ -70,7 +74,7 @@ const updateProject = asyncHandler(async (req, res) => {
 
   const updatedProject = await Project.findByIdAndUpdate(
     {
-      _id: id,
+      _id: new mongoose.Types.ObjectId(projectId),
     },
     {
       name,
@@ -87,15 +91,19 @@ const updateProject = asyncHandler(async (req, res) => {
 });
 
 const deleteProject = asyncHandler(async (req, res) => {
-  const { id } = req.params;
+  const { projectId } = req.params;
 
-  const project = await Project.findById(id);
+  const project = await Project.findById({
+    _id: new mongoose.Types.ObjectId(projectId)
+  });
 
   if (!project) {
     throw new ApiError(404, "Project not found");
   }
 
-  await Project.findByIdAndDelete(id);
+  await Project.findByIdAndDelete({
+    _id: new mongoose.Types.ObjectId(projectId)
+  });
 
   return res
     .status(200)
