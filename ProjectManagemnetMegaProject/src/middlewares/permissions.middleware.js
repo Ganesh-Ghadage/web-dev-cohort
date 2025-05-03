@@ -36,7 +36,7 @@ const checkUserPermission = (roles = []) =>
     });
 
     if (!projectMember) {
-      throw new ApiError(400, "Project member creation failed");
+      throw new ApiError(400, "You are not allowed to perform this task");
     }
 
     const givenRole = projectMember.role;
@@ -46,6 +46,8 @@ const checkUserPermission = (roles = []) =>
     if (!roles.includes(givenRole)) {
       throw new ApiError(403, "You are not allowed to perform this task");
     }
+
+    return next()
 });
 
 export { checkUserPermission };
