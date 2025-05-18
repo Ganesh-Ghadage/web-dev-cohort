@@ -7,6 +7,7 @@ import {
   createProject,
   deleteProject,
   getProjectById,
+  getProjectMembers,
   getProjects,
   updateProject,
 } from "../controllers/project.controllers.js";
@@ -29,4 +30,5 @@ router
 router
   .route('/:projectId/member')
   .post(authenticateUser, checkUserPermission([userRoleEnums.ADMIN, userRoleEnums.PROJECT_ADMIN]), addMemberToProjectValidator(), validate, addMemberToProject)
+  .get(authenticateUser, checkUserPermission([userRoleEnums.ADMIN, userRoleEnums.PROJECT_ADMIN]), projectIdParamsValidator(), validate, getProjectMembers)
 export default router;

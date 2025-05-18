@@ -118,7 +118,25 @@ const deleteProject = asyncHandler(async (req, res) => {
 });
 
 const getProjectMembers = asyncHandler(async (req, res) => {
-  // get project members
+  const { projectId } = req.params;
+
+  const projectMember = await ProjectMember.aggregate([
+    
+  ]);
+
+  if (!projectMember) {
+    throw new ApiError(404, "No members found for this project");
+  }
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponce(
+        200,
+        projectMember,
+        "Project members fetched successfully",
+      ),
+    );
 });
 
 const addMemberToProject = asyncHandler(async (req, res) => {
@@ -146,8 +164,8 @@ const addMemberToProject = asyncHandler(async (req, res) => {
     project: new mongoose.Types.ObjectId(projectId),
   });
 
-  if(exsitingProjectMember && exsitingProjectMember.role === role) {
-    throw new ApiError(406, "User is already part of this project")
+  if (exsitingProjectMember && exsitingProjectMember.role === role) {
+    throw new ApiError(406, "User is already part of this project");
   }
 
   const projectMember = await ProjectMember.create({
