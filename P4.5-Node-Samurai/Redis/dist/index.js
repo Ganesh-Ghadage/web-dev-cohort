@@ -18,6 +18,24 @@ const ioredis_1 = __importDefault(require("ioredis"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 8080;
 const redis = new ioredis_1.default({ host: 'localhost', port: 6379 });
+// rate limiter using redis
+app.use(function (req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const key = `rate-limiter`; //rate-limiter-userId
+        const value = yield redis.get(key);
+        if (value === null) {
+            yield redis.set(key, 0);
+            yield redis.expire(key, 60);
+        }
+        if (Number(value) > 10) {
+            res.status(429).json({ message: "Too Many Requests" });
+            return;
+        }
+        yield redis.incr(key);
+        next();
+        return;
+    });
+});
 app.get('/', (req, res) => {
     res.send("Hello from TS + Redis backend");
     return;
