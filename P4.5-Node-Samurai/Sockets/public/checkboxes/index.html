@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Socket - Checkboxes</title>
+</head>
+<body>
+  <div id="checkbox-container"></div>
+  <script src="/socket.io/socket.io.js"></script>
+		<script>
+			const socket = io();
+
+      const checkboxContainer = document.getElementById('checkbox-container')
+
+      const checkboxes = new Array(100).fill(0)
+
+      async function getState() {
+        const responce = await fetch('/checkbox-state', {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        const _json = await responce.json()
+        if(_json.state) {
+          _json.state.forEach((data, i) => {
+            const input = document.getElementById(`input-${i}`)
+            input.checked = data
+          })
+        }
+      } 
+
+      checkboxes.forEach((checkbox, i) => {
+        const input = document.createElement('input')
+        input.setAttribute('type', 'checkbox')
+        input.id = `input-${i}`
+        input.addEventListener('change', () => {
+          socket.emit('checkbox-update', {index: i,  value: input.checked})
+        })
+        checkboxContainer.appendChild(input)
+      })
+
+      socket.on('checkbox-update', (data) => {
+        // const input = document.getElementById(`input-${data.index}`)
+        // input.checked = data.value
+        getState()
+      })
+
+      getState()
+    </script>
+</body>
+</html>
