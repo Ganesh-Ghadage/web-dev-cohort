@@ -1,0 +1,19 @@
+{
+  "name": "learn-queue",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch api.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bullmq": "^5.56.0",
+    "express": "^5.1.0",
+    "ioredis": "^5.6.1",
+    "zod": "^3.25.67"
+  }
+}
